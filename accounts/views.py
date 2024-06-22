@@ -14,7 +14,7 @@ from django.template import RequestContext
 
 from .forms import LoginForm, RegistrationForm
 from tenant.models import School
-
+from django.contrib.auth import logout
 
 
 class ProfileView(generic.DetailView):
@@ -30,10 +30,14 @@ class ProfileView(generic.DetailView):
 def login(request):
     form = LoginForm
     if request.method == 'POST':
-        username = request.POST.get('username')
+        email = request.POST.get('email')
         password = request.POST.get('password')
-        user = authenticate(request, username=username, password=password)
-        
+        #user = authenticate(request, email=email, password=password)
+        user = None
+        for i in User.objects.all():
+            if i.email == email and i.check_password(password):
+                user = i
+                
         if user is not None:
             auth_login(request, user)
 
@@ -54,9 +58,16 @@ def signup_view(request):
     form = RegistrationForm
     if request.method == 'POST':
         username = request.POST.get('username')
-        password = request.POST.get('password')
-        user = authenticate(request, username=username, password=password)
-        
+        email = request.POST.get('email')
+        password1 = request.POST.get('password1')
+        password1 = request.POST.get('password1')
+
+        user = User()
+        user.username = username
+        user.email = email
+        user.password = password1
+        user.save()
+
         if user is not None:
             auth_login(request, user)
 

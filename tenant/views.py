@@ -7,9 +7,27 @@ from django.utils import timezone
 from django.http import HttpResponse, HttpResponseRedirect
 import datetime
 from django.core.paginator import Paginator
-# Create your views here.
+from rest_framework import viewsets, permissions
 
+from .models import School, AccessKey
+from .serializers import SchoolSerializer, KeySerializer
 
 
 class IndexView(generic.TemplateView):
     template_name = 'tenant/index.html'
+
+class SchoolViewSet(viewsets.ModelViewSet):
+    '''
+    API endpoint that allows users to be viewed or edited.
+    '''
+    queryset = School.objects.all()
+    serializer_class = SchoolSerializer 
+    permission_classes = [permissions.IsAuthenticated]
+
+class KeyViewSet(viewsets.ModelViewSet):
+    '''
+    API endpoint that allows users to be viewed or edited.
+    '''
+    queryset = AccessKey.objects.all()
+    serializer_class = KeySerializer 
+    permission_classes = [permissions.IsAuthenticated]

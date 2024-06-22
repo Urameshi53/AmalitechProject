@@ -19,10 +19,20 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from django.views.generic import TemplateView
+from rest_framework import routers
 
+from tenant import views
+from tenant.views import IndexView
+
+router = routers.DefaultRouter()
+router.register(r'schools', views.SchoolViewSet)
+router.register(r'keys', views.KeyViewSet)
 
 urlpatterns = [
+    path('', IndexView.as_view(), name='home'),
+    path('', include(router.urls)),
     path('admin/', admin.site.urls),
     path('tenant/', include('tenant.urls')),
     path('accounts/', include('accounts.urls')),
+    path('api-auth/', include('rest_framework.urls'))
 ]

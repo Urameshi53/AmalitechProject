@@ -32,7 +32,8 @@ class AccessKey(models.Model):
         ('EXPIRED', 'Expired'),
         ('REVOKED', 'Revoked'),
     )
-    status = models.CharField(max_length=12, choices=STATUS_CHOICES, default=a.key_encrypted)
+    status = models.CharField(max_length=12, choices=STATUS_CHOICES, default=a.status)
+
 
     def check_status(self):
         now = timezone.now()

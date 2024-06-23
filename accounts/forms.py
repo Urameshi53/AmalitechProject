@@ -19,12 +19,24 @@ class LoginForm(forms.Form):
 
 
 class RegistrationForm(forms.Form):
+    username = forms.CharField(max_length=100, 
+                            widget=forms.TextInput(attrs={
+                                'class':'form-control',
+                                'id':'username',
+                                }))
     email = forms.CharField(max_length=100, 
                             widget=forms.TextInput(attrs={
                                 'class':'form-control',
                                 'id':'email',
                                 }))
     
+    location = forms.CharField(max_length=100, 
+                            widget=forms.TextInput(attrs={
+                                'class':'form-control',
+                                'id':'location',
+                                }))
+    
+
     password1 = forms.CharField(max_length=100, 
                             widget=forms.TextInput(attrs={
                                 'class':'form-control',
@@ -40,4 +52,4 @@ class RegistrationForm(forms.Form):
 
     class Meta:
         model = User 
-        fields = ['email', 'password1','password2']
+        fields = ['username', 'email', 'location', 'password1','password2']

@@ -31,13 +31,17 @@ Access Key Manager - Features
 class Key(object):    
     def __init__(self):
         self.status = self.check_status()
-        self.key_plain = ''.join(random.sample(string.ascii_letters, random_num))
+        self.key_plain = self.get_key()
         self.key_encrypted = self.encrypt()
         #self.proc_date = datetime.now()
         #self.proc_date_formatted = self.proc_date.strftime('%Y-%m-%d') # %H:%M:%S')
         #self.exp_date = datetime(2025,1,12)
         #self.exp_date_formatted = self.exp_date.strftime('%Y-%m-%d')
         #self.id = None
+
+    def get_key(self):
+        key = random.sample(string.ascii_letters, random_num)
+        return ''.join(key)
         
     def encrypt_mine(self):
         k = str(random.randint(100, 999))
@@ -120,7 +124,7 @@ class Key(object):
         return self.key_plain
         
     def check_status(self):
-        l = ['Active', 'Expired', 'Revoked']
+        l = ['Expired', 'Revoked']
         return random.sample(l, 1)[0]
     
     def __str__(self):

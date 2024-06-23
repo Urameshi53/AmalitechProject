@@ -29,6 +29,7 @@ router.register(r'schools', views.SchoolViewSet)
 router.register(r'keys', views.KeyViewSet)
 
 urlpatterns = [
+    path('admin/', admin.site.index , name='admin'),
     path('', IndexView.as_view(), name='home'),
     path('', include(router.urls)),
     path('admin/', admin.site.urls),

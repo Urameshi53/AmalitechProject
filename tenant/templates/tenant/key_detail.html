@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% if active_key %}
+<p>
+    <h3>Active Key</h3>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+          <th scope="col">Status</th>
+          <th scope="col">Date Procured</th>
+          <th scope="col">Expiry Date</th>
+          <th scope="col">Key</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td>{{ active_key.status }}</td>
+          <td>{{ active_key.date_proc }}</td>
+          <td>{{ active_key.date_exp }}</td>
+          <td>{{ active_key.key_plain }}</td>
+        </tr>
+
+        </tbody>
+    </table>
+        
+</p>
+
+{% else %}
+
+<div>
+    <p>
+        <button>Get a new Key</button>
+    </p>
+</div>
+
+{% endif %}
+
+<div>
+    <h3>History</h3>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+          <th scope="col">Status</th>
+          <th scope="col">Date Procured</th>
+          <th scope="col">Expiry Date</th>
+          <th scope="col">Key</th>
+        </tr>
+        </thead>
+        <tbody>
+            {% for key in keys %}
+        <tr>
+          <td>{{ key.status }}</td>
+          <td>{{ key.date_proc }}</td>
+          <td>{{ key.date_exp }}</td>
+          <td>{{ key.key_plain }}</td>
+        </tr>
+            {% endfor %}
+        <!--<tr>
+          <th scope="row">2</th>
+          <td>Jacob</td>
+          <td>Thornton</td>
+          <td>@fat</td>
+        </tr>
+        <tr>
+          <th scope="row">3</th>
+          <td colspan="2">Larry the Bird</td>
+          <td>@twitter</td>
+        </tr>-->
+        </tbody>
+      </table>
+</div>
+
+
+  {% endblock %}

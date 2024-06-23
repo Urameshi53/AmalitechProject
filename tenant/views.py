@@ -47,6 +47,7 @@ class KeyDetailView(generic.ListView):
                 context['active_key'] = key
             else:
                 other_keys.append(key)
+                print(key.key_plain)
         context['keys'] = other_keys
 
         return context

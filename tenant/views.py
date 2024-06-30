@@ -8,14 +8,14 @@ from django.http import HttpResponse, HttpResponseRedirect
 import datetime
 from django.core.paginator import Paginator
 from rest_framework import viewsets, permissions
+from rest_framework import filters
 
 from .models import School, AccessKey
 from .serializers import SchoolSerializer, KeySerializer
 
-#key_list = []
-#for i in range(10):
-#    a = AccessKey()
-#    key_list.append(a)
+from tenant.mother import Mother
+
+mother = Mother()
 
 class IndexView(generic.TemplateView):
     template_name = 'tenant/index.html'
@@ -53,14 +53,18 @@ class KeyDetailView(generic.ListView):
         return context
 
 
+def buy_key(request, user_id):
+    school = get_object_or_404(School, user_id=user_id)
+    new_key = AccessKey()
+    new_key.school_id = school.id
+    new_key.status = 'ACTIVE'
+    new_key.save()
+    school.accesskey_set.add(new_key)
+    return HttpResponseRedirect(f"/tenant/keys/")
 
-class SchoolViewSet(viewsets.ModelViewSet):
-    '''
-    API endpoint that allows users to be viewed or edited.
-    '''
-    queryset = School.objects.all()
-    serializer_class = SchoolSerializer 
-    permission_classes = [permissions.IsAuthenticated]
+
+
+
 
 class KeyViewSet(viewsets.ModelViewSet):
     '''
@@ -69,3 +73,14 @@ class KeyViewSet(viewsets.ModelViewSet):
     queryset = AccessKey.objects.all()
     serializer_class = KeySerializer 
     permission_classes = [permissions.IsAuthenticated]
+    filter_backends = [filters.SearchFilter]
+
+class SchoolViewSet(viewsets.ModelViewSet):
+    '''
+    API endpoint that allows users to be viewed or edited.
+    '''
+    queryset = School.objects.all()
+    serializer_class = SchoolSerializer 
+    permission_classes = [permissions.IsAuthenticated]
+    search_fields = ['email']
+    filter_backends = [filters.SearchFilter]  

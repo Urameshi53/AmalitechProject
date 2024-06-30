@@ -61,9 +61,8 @@ class Key(object):
             f.write(private_key)
 
         public_key = key.public_key().export_key()
-        #print('Public Key', key.public_key().export_key().decode('utf-8'))
 
-        p = public_key.decode('utf-8').split('\n')
+        p = public_key.decode('utf-8').split('+')
         #print(p)
         p = p[1:]
         p = p[:-1]
@@ -92,14 +91,6 @@ class Key(object):
             f.write(tag)
             f.write(ciphertext)
 
-        private_key = RSA.import_key(open('private.pem').read())
-
-        with open('encrypted_data.bin', 'rb') as f:
-            enc_session_key = f.read(private_key.size_in_bytes())
-            nonce = f.read(16)
-            tag = f.read(16)
-            ciphertext = f.read()
-        
         return final
 
     def decrypt(self):

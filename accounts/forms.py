@@ -48,8 +48,30 @@ class RegistrationForm(forms.Form):
                                 'class':'form-control',
                                 'id':'password',
                                 }))
-    
 
     class Meta:
         model = User 
         fields = ['username', 'email', 'location', 'password1','password2']
+
+
+class ResetPasswordForm(forms.Form):
+    old_password = forms.CharField(widget=forms.TextInput(attrs={
+                                'class':'form-control',
+                                'id':'old_password',
+                                'label':'Email'
+                                }))
+    
+    password1 = forms.CharField(widget=forms.TextInput(attrs={
+                                'class':'form-control',
+                                'id':'password1',
+                                'label':'Email'
+                                }))
+    
+    password2 = forms.CharField(max_length=100, 
+                            widget=forms.TextInput(attrs={
+                                'class':'form-control',
+                                'id':'password2',
+                                }))
+    class Meta:
+        model = User 
+        fields = ['old_password', 'password1', 'password2']

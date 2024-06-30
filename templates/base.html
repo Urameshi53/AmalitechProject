@@ -107,11 +107,13 @@
         </a>
       </li><!-- End Dashboard Nav -->
 
+      {% if user.is_authenticated %}
       <li class="nav-item">
         <a class="nav-link collapsed" href="{% url 'tenant:keys' %}">
           <i class="bi bi-menu-button-wide"></i><span>Access Keys</span>
         </a>
       </li><!-- End Components Nav -->
+      {% endif %}
 
       <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">

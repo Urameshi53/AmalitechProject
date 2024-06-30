@@ -1,4 +1,4 @@
-from datetime import timezone
+from django.utils import timezone
 import datetime
 from django.db import models
 from django.contrib.auth.models import User
@@ -27,7 +27,7 @@ class AccessKey(models.Model):
     key_plain = models.CharField(max_length=60, default=a.key_plain)
     key_encrypted = models.CharField(max_length=2048, default=a.key_encrypted)
     date_proc = models.DateTimeField(default=now)
-    date_exp = models.DateTimeField()
+    date_exp = models.DateTimeField(default=timezone.now() + datetime.timedelta(days=30))
     STATUS_CHOICES = (
         ('ACTIVE', 'Active'),
         ('EXPIRED', 'Expired'),
